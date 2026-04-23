@@ -1,0 +1,18 @@
+paths:
+  raw_data: data/raw/train.csv
+  processed_data: data/processed/
+  model_dir: models/
+
+features:
+  target: Survived
+  drop_cols: [PassengerId, Name, Ticket, Cabin]
+  categorical_cols: [Sex, Embarked, Initial]
+
+models:
+  random_forest:
+    n_estimators: 500
+    random_state: 42
+  gradient_boosting:
+    n_estimators: 300
+    learning_rate: 0.1
+    random_state: 42
