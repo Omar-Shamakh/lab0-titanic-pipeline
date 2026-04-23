@@ -1,7 +1,7 @@
 # lab0-titanic-pipeline
 ### Titanic Survival Prediction MLOps Pipeline Lab0
 
-# 🚢 Titanic Survival Prediction — MLOps Pipeline
+# Titanic Survival Prediction — MLOps Pipeline
 
 A production-ready MLOps training pipeline that predicts Titanic survival
 using Random Forest and Gradient Boosting classifiers.
