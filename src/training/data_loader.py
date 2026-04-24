@@ -1,17 +1,12 @@
 """Data loading utilities for the Titanic pipeline."""
 
 import pandas as pd
+from omegaconf import DictConfig
 
 
-def load_raw_data(path: str) -> pd.DataFrame:
-    """Load raw Titanic CSV data from the given path.
-
-    Args:
-        path: Path to the raw CSV file.
-
-    Returns:
-        DataFrame with the raw data.
-    """
+def load_data(cfg: DictConfig) -> pd.DataFrame:
+    """Load raw data from the path specified in config."""
+    path = cfg.data.raw_path
     df = pd.read_csv(path)
-    print(f"✅ Loaded data: {df.shape[0]} rows, {df.shape[1]} columns")
+    print(f"✅ Loaded data: {len(df)} rows, {len(df.columns)} columns")
     return df

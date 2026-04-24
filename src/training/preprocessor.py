@@ -1,45 +1,38 @@
 """Data preprocessing for the Titanic pipeline."""
 
 import pandas as pd
-from sklearn.preprocessing import OrdinalEncoder
+import numpy as np
+from sklearn.pipeline import Pipeline
+from sklearn.compose import ColumnTransformer
+from sklearn.preprocessing import StandardScaler, OrdinalEncoder
+from sklearn.impute import SimpleImputer
+from omegaconf import DictConfig
 
 
-def fill_embarked(df: pd.DataFrame) -> pd.DataFrame:
-    """Fill missing Embarked values with most frequent port (S)."""
-    df = df.copy()
-    df["Embarked"].fillna("S", inplace=True)
-    return df
+def build_preprocessor(cfg: DictConfig) -> ColumnTransformer:
+    """Build sklearn ColumnTransformer from config feature lists."""
 
+    # Read feature lists from config
+    numeric_features = list(cfg.features.numeric)
+    categorical_features = list(cfg.features.categorical)
 
-def encode_categoricals(df: pd.DataFrame, cat_cols: list[str]) -> pd.DataFrame:
-    """Encode categorical columns with OrdinalEncoder.
+    numeric_pipeline = Pipeline([
+        ("imputer", SimpleImputer(strategy="median")),
+        ("scaler", StandardScaler()),
+    ])
 
-    OrdinalEncoder converts text categories to integers:
-    female -> 0, male -> 1, etc.
-    Unlike get_dummies, it works inside sklearn Pipelines.
-    """
-    df = df.copy()
-    enc = OrdinalEncoder(handle_unknown="use_encoded_value", unknown_value=-1)
-    df[cat_cols] = enc.fit_transform(df[cat_cols].astype(str))
-    return df, enc
+    categorical_pipeline = Pipeline([
+        ("imputer", SimpleImputer(strategy="most_frequent")),
+        ("encoder", OrdinalEncoder(
+            handle_unknown="use_encoded_value",
+            unknown_value=-1
+        )),
+    ])
 
+    preprocessor = ColumnTransformer([
+        ("num", numeric_pipeline, numeric_features),
+        ("cat", categorical_pipeline, categorical_features),
+    ])
 
-def drop_unused_columns(df: pd.DataFrame, drop_cols: list[str]) -> pd.DataFrame:
-    """Drop columns not useful for modelling."""
-    cols_to_drop = [c for c in drop_cols if c in df.columns]
-    return df.drop(columns=cols_to_drop)
-
-
-def run_preprocessing(
-    df: pd.DataFrame, config: dict
-) -> tuple[pd.DataFrame, OrdinalEncoder]:
-    """Full preprocessing pipeline: fill nulls, encode, drop columns.
-
-    Returns:
-        Preprocessed DataFrame and the fitted encoder.
-    """
-    df = fill_embarked(df)
-    df = drop_unused_columns(df, config["features"]["drop_cols"])
-    df, encoder = encode_categoricals(df, config["features"]["categorical_cols"])
-    print("✅ Preprocessing complete")
-    return df, encoder
+    print("✅ Preprocessor built from config")
+    return preprocessor

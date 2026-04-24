@@ -211,3 +211,5 @@ data/raw/*.csv
 data/processed/*.csv
 data/interim/*.csv
 models/*.pkl
+outputs/
+.hydra/

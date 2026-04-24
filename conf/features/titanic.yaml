@@ -1,0 +1,19 @@
+numeric:
+  - Age_band
+  - Family_size
+  - Alone
+  - Fare_cat
+  - Pclass
+categorical:
+  - Sex
+  - Embarked
+  - Initial
+drop_columns:
+  - PassengerId
+  - Name
+  - Ticket
+  - Cabin
+  - Age
+  - Fare
+  - SibSp
+  - Parch

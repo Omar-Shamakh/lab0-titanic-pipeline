@@ -1,0 +1,4 @@
+raw_path: data/raw/train.csv
+processed_dir: data/processed
+model_dir: models
+target_column: Survived
