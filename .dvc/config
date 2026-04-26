@@ -1,0 +1,5 @@
+[core]
+    remote = origin
+['remote "origin"']
+    url = s3://dagshub/Omar-Shamakh/lab0-titanic-pipeline
+    endpointurl = https://dagshub.com/
