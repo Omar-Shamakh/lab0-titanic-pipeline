@@ -1,0 +1,21 @@
+stages:
+  train:
+    cmd: uv run python run_all.py
+    deps:
+      - run_all.py
+      - main.py
+      - src/training/data_loader.py
+      - src/training/feature_engineering.py
+      - src/training/preprocessor.py
+      - src/training/train.py
+      - data/raw/train.csv
+      - conf/config.yaml
+      - conf/model/random_forest.yaml
+      - conf/model/gradient_boosting.yaml
+      - conf/data/titanic.yaml
+      - conf/features/titanic.yaml
+    outs:
+      - models/random_forest.pkl
+      - models/gradient_boosting.pkl
+    params:
+      - conf/config.yaml:
