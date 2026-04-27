@@ -132,6 +132,6 @@ make format   # runs isort + black + ruff
 
 | Lab | Topic | Status |
 |-----|-------|--------|
-| Lab 0 | Basic pipeline — data loading, feature engineering, training | ✅ Done |
-| Lab 1 | Hydra configuration — YAML configs, CLI overrides, config groups | ✅ Done |
-| Lab 2 | DVC + DagsHub — remote storage, versioned pipeline, reproducibility | ✅ Done |
+| Lab 0 | Basic pipeline — data loading, feature engineering, training | Done |
+| Lab 1 | Hydra configuration — YAML configs, CLI overrides, config groups | Done |
+| Lab 2 | DVC + DagsHub — remote storage, versioned pipeline, reproducibility | Done |
