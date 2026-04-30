@@ -91,7 +91,7 @@ def train_model(df: pd.DataFrame, preprocessor, cfg: DictConfig) -> None:
         )
 
         # ⑤ Also save .pkl locally (for DVC tracking)
-        model_path = Path(cfg.paths.models_dir) / f"{cfg.model.name}.pkl"
+        model_path = Path("models") / f"{cfg.model.name}.pkl"
         model_path.parent.mkdir(parents=True, exist_ok=True)
         joblib.dump(pipeline, model_path)
 
