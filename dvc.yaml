@@ -8,6 +8,7 @@ stages:
       - src/training/feature_engineering.py
       - src/training/preprocessor.py
       - src/training/train.py
+      - src/training/mlflow_config.py   # the new update
       - data/raw/train.csv
       - conf/config.yaml
       - conf/model/random_forest.yaml
