@@ -14,3 +14,9 @@ pipeline:
 hydra:
   run:
     dir: .
+
+
+mlflow:
+  dagshub_username: omar.sameh.shamakh
+  repo_name: lab0-titanic-pipeline
+  experiment_name: titanic-survival-prediction

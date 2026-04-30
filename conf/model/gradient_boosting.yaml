@@ -3,3 +3,4 @@ n_estimators: 300
 learning_rate: 0.1
 max_depth: 3
 subsample: 1.0
+random_state: 42
