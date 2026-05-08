@@ -1,0 +1,14 @@
+.git/
+.venv/
+__pycache__/
+*.pyc
+.dvc/
+data/
+models/
+notebooks/
+mlruns/
+outputs/
+.hydra/
+bruno/
+scripts/
+*.md
