@@ -1,0 +1,36 @@
+info:
+  name: Predict Single
+  type: http
+  seq: 2
+
+http:
+  method: POST
+  url: http://localhost:8000/predict
+  body:
+    type: json
+    data: |-
+      {
+        "passengers": [
+          {
+            "Pclass": 1,
+            "Sex": "female",
+            "Age": 29.0,
+            "SibSp": 0,
+            "Parch": 0,
+            "Fare": 211.3,
+            "Embarked": "S",
+            "Family_size": 1,
+            "Alone": 1,
+            "Initial": "Mrs",
+            "Fare_cat": 3,
+            "Age_band": 2
+          }
+        ]
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
