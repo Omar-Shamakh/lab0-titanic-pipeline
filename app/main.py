@@ -1,7 +1,6 @@
 """FastAPI application for Titanic survival prediction."""
 
 import os
-import dagshub
 import mlflow.sklearn
 import pandas as pd
 from contextlib import asynccontextmanager
@@ -17,11 +16,15 @@ MODEL_ALIAS = "production"
 def load_model():
     """Load the Production model from MLflow registry."""
     global MODEL
-    dagshub.init(
-        repo_owner="omar.sameh.shamakh",
-        repo_name="lab0-titanic-pipeline",
-        mlflow=True
+    
+    import os
+    os.environ["MLFLOW_TRACKING_USERNAME"] = "omar.sameh.shamakh"
+    os.environ["MLFLOW_TRACKING_PASSWORD"] = os.environ.get("DAGSHUB_TOKEN", "")
+    
+    mlflow.set_tracking_uri(
+        "https://dagshub.com/omar.sameh.shamakh/lab0-titanic-pipeline.mlflow"
     )
+    
     model_uri = f"models:/{MODEL_NAME}@{MODEL_ALIAS}"
     print(f"Loading model: {model_uri}")
     MODEL = mlflow.sklearn.load_model(model_uri)
