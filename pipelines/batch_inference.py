@@ -15,7 +15,10 @@ import mlflow.sklearn
 import pandas as pd
 from datetime import datetime
 from prefect import flow, task, get_run_logger
-from src.training.feature_engineering import engineer_features
+from src.training.feature_engineering import (
+    extract_initial, fill_missing_age, create_age_band,
+    create_family_size, create_fare_category
+)
 
 MODEL_NAME = "titanic-random_forest"
 MODEL_ALIAS = "production"
@@ -52,9 +55,14 @@ def transform_data(df: pd.DataFrame) -> pd.DataFrame:
     df["Fare"] = df["Fare"].fillna(df["Fare"].median())
     df["Embarked"] = df["Embarked"].fillna("S")
 
-    # Apply the same feature engineering from training
-    df = engineer_features(df)
+    # Apply the same feature engineering steps as training
+    df = extract_initial(df)
+    df = fill_missing_age(df)
+    df = create_age_band(df)
+    df = create_family_size(df)
+    df = create_fare_category(df)
 
+    # Select only the model features
     feature_cols = [
         "Pclass", "Sex", "Age", "SibSp", "Parch",
         "Fare", "Embarked", "Family_size", "Alone",
